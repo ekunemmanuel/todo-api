@@ -4,13 +4,16 @@
     "build": "nitro build",
     "dev": "nitro dev",
     "prepare": "nitro prepare",
-    "preview": "node .output/server/index.mjs"
+    "preview": "node .output/server/index.mjs",
+    "emulator": "firebase emulators:start"
   },
   "devDependencies": {
     "nitropack": "latest"
   },
   "dependencies": {
+    "@firebase/app-types": "^0.9.2",
     "@types/uuid": "^10.0.0",
+    "firebase-functions": "^5.1.0",
     "uuid": "^10.0.0",
     "zod": "^3.23.8"
   }

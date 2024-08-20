@@ -14,9 +14,7 @@ export const tasks: Task[] = [
 ];
 
 export const taskSchema = z.object({
-  id: z.string({
-    message: "ID must be a string",
-  }),
+  id: z.string().optional(),
   title: z
     .string({
       message: "Title must be a string",

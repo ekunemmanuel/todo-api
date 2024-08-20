@@ -1,10 +1,6 @@
-Here’s the updated `README.md` file with the project name `todo-api`:
-
----
-
 # Todo API Documentation
 
-Welcome to the Todo API! This document provides an overview of the available endpoints and usage for version 1 of the API.
+Welcome to the Todo API! This document provides an overview of the available endpoints and usage for versions 1 and 2 of the API.
 
 ## Table of Contents
 
@@ -19,7 +15,7 @@ Welcome to the Todo API! This document provides an overview of the available end
 
 ## Introduction
 
-The Todo API is a basic REST API built with Nitro. It provides endpoints for interacting with tasks. This README outlines the available routes and how to get started with the API.
+The Todo API is a basic REST API built with Nitro. It provides endpoints for interacting with tasks, with support for both in-memory storage (v1) and Firebase (v2). This README outlines the available routes and how to get started with the API.
 
 ## API Endpoints
 
@@ -41,12 +37,19 @@ Returns a welcome message and a list of available API endpoints.
         "root": "/api/v1",
         "tasks": "/api/v1/tasks"
       }
+    },
+    {
+      "version": "v2",
+      "links": {
+        "root": "/api/v2",
+        "tasks": "/api/v2/tasks"
+      }
     }
   ]
 }
 ```
 
-### Tasks Endpoint
+### Tasks Endpoint (v1)
 
 **`GET /api/v1/tasks`**
 
@@ -146,6 +149,132 @@ Deletes a task by its `id`.
 }
 ```
 
+### Tasks Endpoint (v2)
+
+**`GET /api/v2/tasks`**
+
+Returns a list of all tasks from Firebase.
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": "task-id-1",
+      "title": "Sample Task",
+      "completed": false
+    }
+  ]
+}
+```
+
+**`POST /api/v2/tasks`**
+
+Creates a new task in Firebase. Requires a request body with `title` and `completed` fields.
+
+**Request Body:**
+
+```json
+{
+  "title": "New Task",
+  "completed": false
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "A new task has been added",
+  "data": {
+    "id": "new-task-id",
+    "title": "New Task",
+    "completed": false
+  }
+}
+```
+
+**`GET /api/v2/tasks/{id}`**
+
+Retrieves a task by its `id` from Firebase.
+
+**Response:**
+
+```json
+{
+  "data": {
+    "id": "task-id",
+    "title": "Task Title",
+    "completed": false
+  }
+}
+```
+
+**`PUT /api/v2/tasks/{id}`**
+
+Updates an existing task by ID in Firebase. Requires a request body with `title` and/or `completed` fields.
+
+**Request Body:**
+
+```json
+{
+  "title": "Updated Task Title",
+  "completed": true
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Task with id {id} has been updated",
+  "data": {
+    "id": "task-id",
+    "title": "Updated Task Title",
+    "completed": true
+  }
+}
+```
+
+**`DELETE /api/v2/tasks/{id}`**
+
+Deletes a task by its `id` from Firebase.
+
+**Response:**
+
+```json
+{
+  "message": "Task with id {id} has been deleted"
+}
+```
+
+**`POST /api/v2/tasks/[id]`**
+
+Creates a task with a specific ID in Firebase.
+
+**Request Body:**
+
+```json
+{
+  "title": "Task Title",
+  "completed": false
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "A new task with the specific ID has been added",
+  "data": {
+    "id": "specific-task-id",
+    "title": "Task Title",
+    "completed": false
+  }
+}
+```
+
 ## Getting Started
 
 1. Clone the repository:
@@ -195,5 +324,3 @@ We welcome contributions to improve the Todo API! Please ensure that your code a
 For any questions or issues, please contact me via [emmanuelapabiekun@gmail.com](mailto:emmanuelapabiekun@gmail.com).
 
 ---
-
-Feel free to adjust any part of the README as needed!
