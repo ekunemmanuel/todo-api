@@ -16,11 +16,15 @@ export default defineNitroPlugin((nitroApp) => {
     });
   }
 
-  // Set up Firestore to connect to the Emulator
-  const db = getFirestore();
-  db.settings({
-    host: "localhost:8080", // Port for Firestore emulator
-    ssl: false,
-  });
-  // nitroApp.
+  if (process.dev) {
+    // Set up Firestore to connect to the Emulator
+    const db = getFirestore();
+    db.settings({
+      host: "localhost:8080", // Port for Firestore emulator
+      ssl: false,
+    });
+    
+  }
+  
+
 });
