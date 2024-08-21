@@ -5,7 +5,7 @@ export function fieldError(error: ZodError) {
     field: err.path.join("."),
     message: err.message,
   }));
-  console.log(fieldErrors);
+  // console.log(fieldErrors);
 
   return fieldErrors;
 }

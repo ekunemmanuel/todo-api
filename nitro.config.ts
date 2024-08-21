@@ -3,6 +3,7 @@ export default defineNitroConfig({
   srcDir: "server",
   routeRules: {
     // "/": { redirect: "/api" },
+    "/api/v3": { cors: true },
   },
   runtimeConfig: {
     credential: (() => {
@@ -13,5 +14,6 @@ export default defineNitroConfig({
         return {};
       }
     })(),
-  }
+    apiKey: process.env.apiKey,
+  },
 });

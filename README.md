@@ -1,6 +1,10 @@
+Here's the updated README with the new version `v3` details added:
+
+---
+
 # Todo API Documentation
 
-Welcome to the Todo API! This document provides an overview of the available endpoints and usage for versions 1 and 2 of the API.
+Welcome to the Todo API! This document provides an overview of the available endpoints and usage for all versions of the API.
 
 ## Table of Contents
 
@@ -15,7 +19,7 @@ Welcome to the Todo API! This document provides an overview of the available end
 
 ## Introduction
 
-The Todo API is a basic REST API built with Nitro. It provides endpoints for interacting with tasks, with support for both in-memory storage (v1) and Firebase (v2). This README outlines the available routes and how to get started with the API.
+The Todo API is a REST API built with Nitro. It provides endpoints for interacting with tasks, with support for both in-memory storage (v1), Firebase (v2), and advanced features such as authentication and query support (v3). This README outlines the available routes and how to get started with the API.
 
 ## API Endpoints
 
@@ -43,6 +47,14 @@ Returns a welcome message and a list of available API endpoints.
       "links": {
         "root": "/api/v2",
         "tasks": "/api/v2/tasks"
+      }
+    },
+    {
+      "version": "v3",
+      "links": {
+        "root": "/api/v3",
+        "auth": "/api/v3/auth",
+        "tasks": "/api/v3/tasks"
       }
     }
   ]
@@ -275,6 +287,160 @@ Creates a task with a specific ID in Firebase.
 }
 ```
 
+### Tasks Endpoint (v3)
+
+**`GET /api/v3/tasks`**
+
+Returns a list of tasks from Firebase with support for query parameters like filtering and ordering.
+
+**Query Parameters:**
+- `filter`: Additional filters can be applied using query parameters i.e completed=true.
+
+**Response:**
+
+```json
+{
+  "data": [
+    {
+      "id": "task-id-1",
+      "title": "Sample Task",
+      "completed": false
+    }
+  ]
+}
+```
+
+**`POST /api/v3/tasks`**
+
+Creates a new task in Firebase with authentication required. Requires a request body with `title` and `completed` fields.
+
+**Request Body:**
+
+```json
+{
+  "title": "New Task",
+  "completed": false
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "A new task has been added",
+  "data": {
+    "id": "new-task-id",
+    "title": "New Task",
+    "completed": false
+  }
+}
+```
+
+**`GET /api/v3/tasks/{id}`**
+
+Retrieves a task by its `id` from Firebase.
+
+**Response:**
+
+```json
+{
+  "data": {
+    "id": "task-id",
+    "title": "Task Title",
+    "completed": false
+  }
+}
+```
+
+**`PUT /api/v3/tasks/{id}`**
+
+Updates an existing task by ID in Firebase with authentication required. Requires a request body with `title` and/or `completed` fields.
+
+**Request Body:**
+
+```json
+{
+  "title": "Updated Task Title",
+  "completed": true
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Task with id {id} has been updated",
+  "data": {
+    "id": "task-id",
+    "title": "Updated Task Title",
+    "completed": true
+  }
+}
+```
+
+**`DELETE /api/v3/tasks/{id}`**
+
+Deletes a task by its `id` from Firebase with authentication required.
+
+**Response:**
+
+```json
+{
+  "message": "Task with id {id} has been deleted"
+}
+```
+
+### Auth Endpoint (v3)
+
+**`POST /api/v3/auth/register`**
+
+Registers a new user.
+
+**Request Body:**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "User registered successfully",
+  "data": {
+    "id": "user-id",
+    "email": "user@example.com"
+  }
+}
+```
+
+**`POST /api/v3/auth/login`**
+
+Logs in an existing user.
+
+**Request Body:**
+
+```json
+{
+  "email": "user@example.com",
+  "password": "securepassword"
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "User logged in successfully",
+  "data": {
+    "token": "jwt-token"
+  }
+}
+```
+
 ## Getting Started
 
 1. Clone the repository:
@@ -301,26 +467,4 @@ Creates a task with a specific ID in Firebase.
    npm run dev
    ```
 
-5. The API will be available at `http://localhost:3000`.
-
-## Error Handling
-
-- **400 Validation Error**: Returned when the request body does not meet the validation criteria.
-- **404 Task Not Found**: Returned when a task with the specified `id` does not exist.
-
-## Development
-
-To contribute to the Todo API:
-
-1. Fork the repository.
-2. Create a new branch for your changes.
-3. Commit your changes and push to your fork.
-4. Create a pull request to merge your changes into the main repository.
-
-## Contributing
-
-We welcome contributions to improve the Todo API! Please ensure that your code adheres to the project's coding standards and includes relevant tests.
-
-For any questions or issues, please contact me via [emmanuelapabiekun@gmail.com](mailto:emmanuelapabiekun@gmail.com).
-
----
+5. The API will be available at `http://localhost

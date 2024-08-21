@@ -5,9 +5,11 @@
     "dev": "nitro dev",
     "prepare": "nitro prepare",
     "preview": "node .output/server/index.mjs",
-    "emulator": "firebase emulators:start"
+    "emulator": "firebase emulators:start",
+    "dev:all": "concurrently \"npm run dev\" \"npm run emulator\""
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "nitropack": "latest"
   },
   "dependencies": {

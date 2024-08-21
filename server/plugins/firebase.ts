@@ -1,7 +1,6 @@
 import { initializeApp, getApps, cert } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
 
-export default defineNitroPlugin((nitroApp) => {
+export default defineNitroPlugin((nitro) => {
   const apps = getApps();
   const { credential } = useRuntimeConfig();
 
@@ -10,21 +9,10 @@ export default defineNitroPlugin((nitroApp) => {
     initializeApp({
       credential: cert({
         clientEmail: credential.client_email,
-        privateKey: credential.private_key,
+        privateKey: credential.private_key, // Properly handle escaped newlines in the private key
+        // privateKey: credential.private_key.replace(/\\n/g, "\n"), // Properly handle escaped newlines in the private key
         projectId: credential.project_id,
       }),
     });
   }
-
-  if (process.dev) {
-    // Set up Firestore to connect to the Emulator
-    const db = getFirestore();
-    db.settings({
-      host: "localhost:8080", // Port for Firestore emulator
-      ssl: false,
-    });
-    
-  }
-  
-
 });

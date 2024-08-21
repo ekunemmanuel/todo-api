@@ -1,13 +1,50 @@
-import { getFirestore } from "firebase-admin/firestore";
+import {
+  Query,
+  CollectionReference,
+  WhereFilterOp,
+  OrderByDirection,
+  DocumentData,
+  getFirestore,
+} from "firebase-admin/firestore";
 
-async function getDocs<T>({ collectionName }: { collectionName: string }) {
-  const db = getFirestore();
+const db = getFirestore();
+
+interface QueryOptions {
+  orderBy?: { field: string; direction?: OrderByDirection }[];
+  where?: { field: string; operator: WhereFilterOp; value: any }[];
+}
+
+async function getDocs<T>({
+  collectionName,
+  queryOptions = {},
+}: {
+  collectionName: string;
+  queryOptions?: QueryOptions;
+}) {
   try {
-    const data = await db.collection(collectionName).get();
+    // Start with the base query
+    let query: Query<DocumentData> = db.collection(collectionName);
+
+    // Apply filtering (where) conditions
+    if (queryOptions.where) {
+      queryOptions.where.forEach(({ field, operator, value }) => {
+        query = query.where(field, operator, value);
+      });
+    }
+
+    // Apply ordering (orderBy) conditions
+    if (queryOptions.orderBy) {
+      queryOptions.orderBy.forEach(({ field, direction = "asc" }) => {
+        query = query.orderBy(field, direction);
+      });
+    }
+
+    // Execute the query
+    const snapshot = await query.get();
     return {
       pending: false,
       error: null,
-      data: data.docs.map((doc) => {
+      data: snapshot.docs.map((doc) => {
         const id = doc.id;
         const data = doc.data();
         return { id, ...data } as T;
@@ -17,7 +54,7 @@ async function getDocs<T>({ collectionName }: { collectionName: string }) {
     return {
       pending: false,
       error,
-      data: null,
+      data: [],
     };
   }
 }
@@ -29,9 +66,9 @@ async function getDoc<T>({
   collectionName: string;
   docId: string;
 }) {
-  const db = getFirestore();
   try {
     const doc = await db.collection(collectionName).doc(docId).get();
+
     if (!doc.exists) {
       throw new Error(`Document with ID ${docId} not found`);
     }
@@ -44,7 +81,7 @@ async function getDoc<T>({
     return {
       pending: false,
       error,
-      data: null,
+      // data: null,
     };
   }
 }
@@ -58,12 +95,11 @@ async function createDoc<T>({
   data: T;
   docId?: string;
 }) {
-  const db = getFirestore();
   try {
     const docRef = docId
       ? db.collection(collectionName).doc(docId)
       : db.collection(collectionName).doc();
-    await docRef.set(data);
+    await docRef.set({ ...data, createdAt: new Date().toISOString() });
     return {
       pending: false,
       error: null,
@@ -73,7 +109,7 @@ async function createDoc<T>({
     return {
       pending: false,
       error,
-      data: null,
+      // data: null,
     };
   }
 }
@@ -87,7 +123,6 @@ async function updateDoc<T>({
   docId: string;
   data: any;
 }) {
-  const db = getFirestore();
   try {
     const docRef = db.collection(collectionName).doc(docId);
     await docRef.update(data);
@@ -100,7 +135,7 @@ async function updateDoc<T>({
     return {
       pending: false,
       error,
-      data: null,
+      // data: null,
     };
   }
 }
@@ -112,7 +147,6 @@ async function deleteDoc({
   collectionName: string;
   docId: string;
 }) {
-  const db = getFirestore();
   try {
     const docRef = db.collection(collectionName).doc(docId);
     await docRef.delete();
@@ -125,7 +159,7 @@ async function deleteDoc({
     return {
       pending: false,
       error,
-      data: null,
+      // data: null,
     };
   }
 }
