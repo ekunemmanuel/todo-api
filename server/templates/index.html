@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+
+</head>
+
+<body>
+    <h1>Welcome to the API</h1>
+    <p>Available endpoints:</p>
+  
+    <div class="version">
+        <h2>v1</h2>
+        <p>The v1 API version offers basic CRUD operations for managing tasks in memory.</p>
+        <ul>
+            <li>
+                <p class="description"><span class="verb">GET</span> <a href="/api/v1/tasks" class="link">/api/v1/tasks</a> - Retrieve a list of tasks</p>
+            </li>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v1/tasks" class="link">/api/v1/tasks</a> - Create a new task</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">PUT</span> <a href="/api/v1/tasks/[id]" class="link">/api/v1/tasks/[id]</a> - Update an existing task by ID</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">DELETE</span> <a href="/api/v1/tasks/[id]" class="link">/api/v1/tasks/[id]</a> - Delete a task by ID</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <h2>v2</h2>
+        <p>The v2 API version introduces Firestore integration for persistent storage of tasks.</p>
+        <ul>
+            <li>
+                <p class="description"><span class="verb">GET</span> <a href="/api/v2/tasks" class="link">/api/v2/tasks</a> - Retrieve a list of tasks</p>
+            </li>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v2/tasks" class="link">/api/v2/tasks</a> - Create a new task</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">PUT</span> <a href="/api/v2/tasks/[id]" class="link">/api/v2/tasks/[id]</a> - Update an existing task by ID</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">DELETE</span> <a href="/api/v2/tasks/[id]" class="link">/api/v2/tasks/[id]</a> - Delete a task by ID</p>
+            </li>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v2/tasks/[id]" class="link">/api/v2/tasks/[id]</a> - Create a task with a specific ID</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="version">
+        <h2>v3</h2>
+        <p>The v3 API version extends the capabilities of v2 with authentication and query support. It includes login and registration endpoints, and supports query parameters for filtering and ordering tasks. A global rate limiter has been added for enhanced security.</p>
+        <ul>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v3/auth/login" class="link">/api/v3/auth/login</a> - User login</p>
+                <div class="body-structure">
+                    <pre>{
+    "email": "string",
+    "password": "string"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v3/auth/register" class="link">/api/v3/auth/register</a> - User registration</p>
+                <div class="body-structure">
+                    <pre>{
+    "email": "string",
+    "password": "string",
+    "firstName": "string",
+    "lastName": "string"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">GET</span> <a href="/api/v3/tasks" class="link">/api/v3/tasks</a> - Retrieve a list of tasks with filtering and ordering options (returns ID in descending order by default based on createdAt)</p>
+                <div class="query-params">
+                    <p><strong>Query Parameters:</strong></p>
+                    <p>completed (boolean) - Filter tasks by completion status</p>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v3/tasks" class="link">/api/v3/tasks</a> - Create a new task</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">PUT</span> <a href="/api/v3/tasks/[id]" class="link">/api/v3/tasks/[id]</a> - Update an existing task by ID</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+            <li>
+                <p class="description"><span class="verb">DELETE</span> <a href="/api/v3/tasks/[id]" class="link">/api/v3/tasks/[id]</a> - Delete a task by ID</p>
+            </li>
+            <li>
+                <p class="description"><span class="verb">POST</span> <a href="/api/v3/tasks/[id]" class="link">/api/v3/tasks/[id]</a> - Create a task with a specific ID</p>
+                <div class="body-structure">
+                    <pre>{
+    "title": "string",
+    "completed": "boolean"
+}</pre>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,10 +1,6 @@
 //https://nitro.unjs.io/config
 export default defineNitroConfig({
   srcDir: "server",
-  routeRules: {
-    // "/": { redirect: "/api" },
-    "/api/v3": { cors: true },
-  },
   runtimeConfig: {
     credential: (() => {
       try {
@@ -16,4 +12,14 @@ export default defineNitroConfig({
     })(),
     apiKey: process.env.apiKey,
   },
+  serverAssets: [
+    {
+      baseName: "templates",
+      dir: "./templates",
+    },
+    {
+      baseName: "public",
+      dir:"../public"
+    }
+  ],
 });

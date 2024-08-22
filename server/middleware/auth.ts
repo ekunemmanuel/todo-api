@@ -1,10 +1,8 @@
 import { getAuth } from "firebase-admin/auth";
-import { unknown } from "zod";
 import { User } from "~~/types";
 
 export default defineEventHandler(async (event) => {
   const url = getRequestURL(event).pathname;
-
   // Only apply the middleware to routes under /api/v3 except for /auth/login and /auth/register
   if (
     url.startsWith("/api/v3") &&
@@ -34,7 +32,7 @@ export default defineEventHandler(async (event) => {
   }
 });
 
-async function verifyToken(token) {
+async function verifyToken(token: string) {
   try {
     const auth = getAuth();
     const decodedToken = await auth.verifyIdToken(token);

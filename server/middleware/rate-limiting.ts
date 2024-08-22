@@ -7,7 +7,7 @@ interface RateLimitData {
 
 const rateLimitMap: Record<string, RateLimitData> = {};
 const WINDOW_SIZE_MS = howLong(1); // 1 minute window size
-const MAX_REQUESTS_PER_WINDOW = 10; // Max requests allowed per window
+const MAX_REQUESTS_PER_WINDOW = 100; // Max requests allowed per window
 
 // Utility function to calculate window size in milliseconds
 function howLong(x: number) {
